@@ -4,5 +4,5 @@ tokenizers
 rwkv==0.7.0
 pynvml
 huggingface_hub
-tokenizers>=0.13.2
 prompt_toolkit
+gradio
