@@ -1,51 +1,22 @@
 import gradio as gr
 import os, gc, torch
-import win32ui
 from datetime import datetime
-#from huggingface_hub import hf_hub_download
-#from pynvml import *
-
-#nvmlInit()
-#gpu_h = nvmlDeviceGetHandleByIndex(0)
-ctx_limit = 2048
-desc = f'''链接：
-<a href='https://github.com/BlinkDL/ChatRWKV' target="_blank" style="margin:0 0.5em">ChatRWKV</a>
-<a href='https://github.com/BlinkDL/RWKV-LM' target="_blank" style="margin:0 0.5em">RWKV-LM</a>
-<a href="https://pypi.org/project/rwkv/" target="_blank" style="margin:0 0.5em">RWKV pip package</a>
-<a href="https://zhuanlan.zhihu.com/p/609154637" target="_blank" style="margin:0 0.5em">知乎教程</a>
-<a href="https://zhuanlan.zhihu.com/p/616815736" target="_blank" style="margin:0 0.5em">webui教程</a>
+from huggingface_hub import hf_hub_download
+from pynvml import *
+nvmlInit()
+gpu_h = nvmlDeviceGetHandleByIndex(0)
+ctx_limit = 4096
+desc = f'''链接：<a href='https://github.com/BlinkDL/ChatRWKV' target="_blank" style="margin:0 0.5em">ChatRWKV</a><a href='https://github.com/BlinkDL/RWKV-LM' target="_blank" style="margin:0 0.5em">RWKV-LM</a><a href="https://pypi.org/project/rwkv/" target="_blank" style="margin:0 0.5em">RWKV pip package</a><a href="https://zhuanlan.zhihu.com/p/618011122" target="_blank" style="margin:0 0.5em">知乎教程</a>
 '''
 
 os.environ["RWKV_JIT_ON"] = '1'
-os.environ["RWKV_CUDA_ON"] = '1'  # if '1' then use CUDA kernel for seq mode (much faster)
+os.environ["RWKV_CUDA_ON"] = '1' # if '1' then use CUDA kernel for seq mode (much faster)
 
 from rwkv.model import RWKV
-dir_path = os.path.dirname(os.path.realpath(__file__))
-# 选择模型
-
-
-# 0代表另存为对话框，1代表打开文件对话框
-dlg = win32ui.CreateFileDialog(1)
-
-# 设置默认目录
-dlg.SetOFNInitialDir('D:/chatRWKV/ChatRWKV/models/')
-
-# 显示对话框
-dlg.DoModal()
-
-# 获取用户选择的文件全路径
-filename = dlg.GetPathName()
-
-model_path = filename
-
-
-#model_path = os.path.join(dir_path, 'models','RWKV-4-Pile-7B-EngChn-testNovel-done-ctx2048-20230317')
-#model_path = "D:/chatRWKV/ChatRWKV/models/RWKV-4-Pile-7B-EngChn-testNovel-done-ctx2048-20230317"
-model = RWKV(model=model_path, strategy='cuda fp16i8')
+model_path = hf_hub_download(repo_id="BlinkDL/rwkv-4-raven", filename="RWKV-4-Raven-14B-v12-Eng98%-Other2%-20230523-ctx8192.pth")
+model = RWKV(model=model_path, strategy='cuda fp16')
 from rwkv.utils import PIPELINE, PIPELINE_ARGS
-relative_path = os.path.join(dir_path, 'v2', '20B_tokenizer.json')
-pipeline = PIPELINE(model, relative_path)
-
+pipeline = PIPELINE(model, "20B_tokenizer.json")
 
 def infer(
         ctx,
