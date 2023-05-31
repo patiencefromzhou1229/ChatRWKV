@@ -314,4 +314,4 @@ with gr.Blocks(title=title) as demo:
     #     clear.click(lambda: ([], None, ""), [], [chatbot, state, message], queue=False)
 
 demo.queue(concurrency_count=1, max_size=10)
-demo.launch(share=True)
+demo.launch(share=False)
