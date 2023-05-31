@@ -6,5 +6,5 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt --no-cache-dir
 
 COPY . .
-
+EXPOSE 9412
 CMD python app.py
