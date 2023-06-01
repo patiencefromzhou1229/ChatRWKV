@@ -7,13 +7,13 @@ from pynvml import *
 nvmlInit()
 gpu_h = nvmlDeviceGetHandleByIndex(0)
 ctx_limit = 1536
-title = "RWKV-4-Raven-14B-v12-Eng98%-Other2%-20230523-ctx8192"
+title = "RWKV-4-Raven-14B-v8-Eng87%-Chn10%-Jpn1%-Other2%-20230412-ctx4096.pth"
 
 os.environ["RWKV_JIT_ON"] = '1'
 os.environ["RWKV_CUDA_ON"] = '1'  # if '1' then use CUDA kernel for seq mode (much faster)
 
 from rwkv.model import RWKV
-
+# model_path = hf_hub_download(repo_id="BlinkDL/rwkv-4-raven", filename=f"RWKV-4-Raven-14B-v8-Eng87%-Chn10%-Jpn1%-Other2%-20230412-ctx4096.pth")
 # model_path = hf_hub_download(repo_id="BlinkDL/rwkv-4-raven", filename=f"{title}.pth")
 model_path = '/app/models/{}.pth'.format(title)
 model = RWKV(model=model_path, strategy='cuda fp16i8 *24 -> cuda fp16')
