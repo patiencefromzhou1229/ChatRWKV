@@ -256,7 +256,7 @@ with gr.Blocks(title=title) as demo:
             with gr.Column():
                 instruction = gr.Textbox(lines=2, label="Instruction", value="Tell me about ravens.")
                 input = gr.Textbox(lines=2, label="Input", placeholder="none")
-                token_count = gr.Slider(10, 300, label="Max Tokens", step=10, value=300)
+                token_count = gr.Slider(10, 800, label="Max Tokens", step=10, value=300)
                 temperature = gr.Slider(0.2, 2.0, label="Temperature", step=0.1, value=1.2)
                 top_p = gr.Slider(0.0, 1.0, label="Top P", step=0.05, value=0.5)
                 presence_penalty = gr.Slider(0.0, 1.0, label="Presence Penalty", step=0.1, value=0.4)
