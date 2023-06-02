@@ -8,4 +8,4 @@ container_id=$(docker ps -a -f "name=^/${container_name}$" --format "{{.ID}}")
         docker rm -f "${container_id}"
     fi
 
-docker run -dit --gpus '"device=3"' -p 9412:7860 -v /mnt/share/huggingface/rwkv/:/app/models --name ${container_name} rwkv:v1.0.4 
+docker run -dit --gpus '"device=3"' --restart unless-stopped -p 9412:7860 -v /mnt/share/huggingface/rwkv/:/app/models --name ${container_name} rwkv:v1.0.4
