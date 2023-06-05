@@ -176,7 +176,7 @@ def chat(
     out_last = begin
     out_str: str = ''
     occurrence = {}
-    for i in range(300):
+    for i in range(500):
         if i <= 0:
             nl_bias = -float('inf')
         elif i <= 30:
