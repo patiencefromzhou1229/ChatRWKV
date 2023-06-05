@@ -276,42 +276,42 @@ with gr.Blocks(title=title) as demo:
         data.click(lambda x: x, [data],
                    [instruction, input, token_count, temperature, top_p, presence_penalty, count_penalty])
 
-    # with gr.Tab("Chat (Experimental - Might be buggy - use ChatRWKV for reference)"):
-    #     gr.Markdown(f'''<b>*** The length of response is restricted in this demo. Use ChatRWKV for longer generations. ***</b> Say "go on" or "continue" can sometimes continue the response. If you'd like to edit the scenario, make sure to follow the exact same format: empty lines between (and only between) different speakers. Changes only take effect after you press [Clear]. <b>The default "Bob" & "Alice" names work the best.</b>''', label="Description")
-    #     with gr.Row():
-    #         with gr.Column():
-    #             chatbot = gr.Chatbot()
-    #             state = gr.State()
-    #             message = gr.Textbox(label="Message", value="Write me a python code to land on moon.")
-    #             with gr.Row():
-    #                 send = gr.Button("Send", variant="primary")
-    #                 alt = gr.Button("Alternative", variant="secondary")
-    #                 clear = gr.Button("Clear", variant="secondary")
-    #         with gr.Column():
-    #             with gr.Row():
-    #                 user_name = gr.Textbox(lines=1, max_lines=1, label="User Name", value="Bob")
-    #                 bot_name = gr.Textbox(lines=1, max_lines=1, label="Bot Name", value="Alice")
-    #             prompt = gr.Textbox(lines=10, max_lines=50, label="Scenario", value=chat_intro)
-    #             temperature = gr.Slider(0.2, 2.0, label="Temperature", step=0.1, value=1.2)
-    #             top_p = gr.Slider(0.0, 1.0, label="Top P", step=0.05, value=0.5)
-    #             presence_penalty = gr.Slider(0.0, 1.0, label="Presence Penalty", step=0.1, value=0.4)
-    #             count_penalty = gr.Slider(0.0, 1.0, label="Count Penalty", step=0.1, value=0.4)
-    #     chat_inputs = [
-    #         prompt,
-    #         user_name,
-    #         bot_name,
-    #         chatbot,
-    #         state,
-    #         temperature,
-    #         top_p,
-    #         presence_penalty,
-    #         count_penalty
-    #     ]
-    #     chat_outputs = [chatbot, state]
-    #     message.submit(user, [message, chatbot], [message, chatbot], queue=False).then(chat, chat_inputs, chat_outputs)
-    #     send.click(user, [message, chatbot], [message, chatbot], queue=False).then(chat, chat_inputs, chat_outputs)
-    #     alt.click(alternative, [chatbot, state], [chatbot, state], queue=False).then(chat, chat_inputs, chat_outputs)
-    #     clear.click(lambda: ([], None, ""), [], [chatbot, state, message], queue=False)
+    with gr.Tab("Chat (Experimental - Might be buggy - use ChatRWKV for reference)"):
+        gr.Markdown(f'''<b>*** The length of response is restricted in this demo. Use ChatRWKV for longer generations. ***</b> Say "go on" or "continue" can sometimes continue the response. If you'd like to edit the scenario, make sure to follow the exact same format: empty lines between (and only between) different speakers. Changes only take effect after you press [Clear]. <b>The default "Bob" & "Alice" names work the best.</b>''', label="Description")
+        with gr.Row():
+            with gr.Column():
+                chatbot = gr.Chatbot()
+                state = gr.State()
+                message = gr.Textbox(label="Message", value="Write me a python code to land on moon.")
+                with gr.Row():
+                    send = gr.Button("Send", variant="primary")
+                    alt = gr.Button("Alternative", variant="secondary")
+                    clear = gr.Button("Clear", variant="secondary")
+            with gr.Column():
+                with gr.Row():
+                    user_name = gr.Textbox(lines=1, max_lines=1, label="User Name", value="Bob")
+                    bot_name = gr.Textbox(lines=1, max_lines=1, label="Bot Name", value="Alice")
+                prompt = gr.Textbox(lines=10, max_lines=50, label="Scenario", value=chat_intro)
+                temperature = gr.Slider(0.2, 2.0, label="Temperature", step=0.1, value=1.2)
+                top_p = gr.Slider(0.0, 1.0, label="Top P", step=0.05, value=0.5)
+                presence_penalty = gr.Slider(0.0, 1.0, label="Presence Penalty", step=0.1, value=0.4)
+                count_penalty = gr.Slider(0.0, 1.0, label="Count Penalty", step=0.1, value=0.4)
+        chat_inputs = [
+            prompt,
+            user_name,
+            bot_name,
+            chatbot,
+            state,
+            temperature,
+            top_p,
+            presence_penalty,
+            count_penalty
+        ]
+        chat_outputs = [chatbot, state]
+        message.submit(user, [message, chatbot], [message, chatbot], queue=False).then(chat, chat_inputs, chat_outputs)
+        send.click(user, [message, chatbot], [message, chatbot], queue=False).then(chat, chat_inputs, chat_outputs)
+        alt.click(alternative, [chatbot, state], [chatbot, state], queue=False).then(chat, chat_inputs, chat_outputs)
+        clear.click(lambda: ([], None, ""), [], [chatbot, state, message], queue=False)
 
 demo.queue(concurrency_count=1, max_size=10)
 demo.launch(share=False, server_name='0.0.0.0')
